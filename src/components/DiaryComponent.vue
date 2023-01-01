@@ -21,6 +21,13 @@
         </tr>
       </tbody>
     </table>
+    <div id="pagingDiv">
+      <router-link to="?">&lt;</router-link>
+      <router-link :to="{}" v-for="index in 10" :key="index">{{
+        index + startPage
+      }}</router-link>
+      <router-link to="?">&gt;</router-link>
+    </div>
   </div>
 </template>
 
@@ -31,6 +38,7 @@ div {
   flex-direction: column;
   align-items: center;
 }
+
 table {
   width: 80%;
   text-align: center;
@@ -52,6 +60,12 @@ tr,
 td {
   border: 1px black solid;
 }
+#pagingDiv {
+  flex-direction: row;
+}
+#pagingDiv a {
+  margin: 10px;
+}
 </style>
 
 <script lang="ts">
@@ -71,6 +85,17 @@ export default defineComponent({
       default: () => [],
       required: true,
     },
+    pageProp: {
+      type: Number,
+      default: () => 1,
+      required: true,
+    },
+  },
+  setup(props) {
+    var startPage = Math.floor(props.pageProp / 10) * 10;
+    return {
+      startPage,
+    };
   },
 });
 </script>

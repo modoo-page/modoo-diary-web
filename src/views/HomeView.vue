@@ -1,11 +1,12 @@
 <template>
-  <diary-component :diaryProp="diaryList"></diary-component>
+  <diary-component :diaryProp="diaryList" :pageProp="page"></diary-component>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, Ref } from "vue";
 import { GetAxios, FormattedDate } from "@/utils/utils";
 import DiaryComponent, { Diary } from "@/components/DiaryComponent.vue";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   name: "HomeView",
@@ -13,8 +14,9 @@ export default defineComponent({
     DiaryComponent,
   },
   setup() {
+    const route = useRoute();
     const diaryList: Ref<Array<Diary>> = ref([]);
-
+    let page = ref(1);
     function getDiaryList() {
       let axios = GetAxios();
       axios
@@ -32,13 +34,19 @@ export default defineComponent({
         });
     }
 
+    function GetPage() {
+      if (typeof route.query.page === "string") {
+        page.value = parseInt(route.query.page);
+      }
+    }
     function init() {
       getDiaryList();
+      GetPage();
     }
-
     init();
     return {
       diaryList,
+      page,
     };
   },
 });
