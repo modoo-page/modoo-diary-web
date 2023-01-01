@@ -23,9 +23,9 @@
     </table>
     <div id="pagingDiv">
       <router-link to="?">&lt;</router-link>
-      <router-link :to="{}" v-for="index in 10" :key="index">{{
-        index + startPage
-      }}</router-link>
+      <router-link :to="'/?page=' + index" v-for="index in 10" :key="index">
+        {{ index + startPage }}
+      </router-link>
       <router-link to="?">&gt;</router-link>
     </div>
   </div>
