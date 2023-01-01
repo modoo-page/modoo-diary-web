@@ -18,17 +18,16 @@ export function ZeroFilledNumber(target: number | string): string {
   } else {
     targetNumber += target;
   }
-
-  return targetNumber.substr(-2, targetNumber.length);
+  return targetNumber.substring(targetNumber.length - 2, targetNumber.length);
 }
 
 export function FormattedDate(date: string | Date): string {
   const createdTime = new Date(date);
 
-  const month = ZeroFilledNumber(createdTime.getMonth() - 1);
-  const day = ZeroFilledNumber(createdTime.getDay());
-  const hours = ZeroFilledNumber(createdTime.getHours());
-  const minutes = ZeroFilledNumber(createdTime.getMinutes());
+  const month = ZeroFilledNumber(createdTime.getMonth() + 1);
+  const day = ZeroFilledNumber(createdTime.getDate());
+  const hour = ZeroFilledNumber(createdTime.getHours());
+  const minute = ZeroFilledNumber(createdTime.getMinutes());
 
-  return `${createdTime.getFullYear()}-${month}-${day} ${hours}:${minutes}`;
+  return `${createdTime.getFullYear()}-${month}-${day} ${hour}:${minute}`;
 }
