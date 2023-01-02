@@ -36,7 +36,10 @@ export default defineComponent({
 
     function GetPage() {
       if (typeof route.query.page === "string") {
-        page.value = parseInt(route.query.page);
+        let val = isNaN(parseInt(route.query.page))
+          ? 1
+          : parseInt(route.query.page);
+        page.value = val;
       }
     }
     function init() {
@@ -44,7 +47,7 @@ export default defineComponent({
       getDiaryList();
     }
     watchEffect(() => {
-      page.value = parseInt(route.query.page as string);
+      GetPage();
       getDiaryList();
     });
     init();
