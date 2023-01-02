@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, Ref } from "vue";
+import { defineComponent, ref, Ref, watchEffect } from "vue";
 import { GetAxios, FormattedDate } from "@/utils/utils";
 import DiaryComponent, { Diary } from "@/components/DiaryComponent.vue";
 import { useRoute } from "vue-router";
@@ -20,7 +20,7 @@ export default defineComponent({
     function getDiaryList() {
       let axios = GetAxios();
       axios
-        .get("/diaries")
+        .get("/diaries?page=" + page.value)
         .then((result) => {
           diaryList.value = (result.data as Array<Diary>).map((value) => {
             return {
@@ -40,9 +40,13 @@ export default defineComponent({
       }
     }
     function init() {
-      getDiaryList();
       GetPage();
+      getDiaryList();
     }
+    watchEffect(() => {
+      page.value = parseInt(route.query.page as string);
+      getDiaryList();
+    });
     init();
     return {
       diaryList,

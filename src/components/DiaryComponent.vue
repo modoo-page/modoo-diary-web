@@ -22,11 +22,17 @@
       </tbody>
     </table>
     <div id="pagingDiv">
-      <router-link to="?">&lt;</router-link>
-      <router-link :to="'/?page=' + index" v-for="index in 10" :key="index">
+      <router-link :to="'/?page=' + (startPage - 1 >= 0 ? startPage - 1 : 1)"
+        >&lt;</router-link
+      >
+      <router-link
+        :to="'/?page=' + (index + startPage)"
+        v-for="index in 10"
+        :key="index"
+      >
         {{ index + startPage }}
       </router-link>
-      <router-link to="?">&gt;</router-link>
+      <router-link :to="'/?page=' + (startPage + 11)">&gt;</router-link>
     </div>
   </div>
 </template>
@@ -60,16 +66,18 @@ tr,
 td {
   border: 1px black solid;
 }
+
 #pagingDiv {
   flex-direction: row;
 }
+
 #pagingDiv a {
   margin: 10px;
 }
 </style>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, ref, watchEffect } from "vue";
 export type Diary = {
   diaryId: number;
   author: string;
@@ -92,7 +100,10 @@ export default defineComponent({
     },
   },
   setup(props) {
-    var startPage = Math.floor(props.pageProp / 10) * 10;
+    var startPage = ref(Math.floor(props.pageProp / 10) * 10);
+    watchEffect(() => {
+      startPage.value = Math.floor(props.pageProp / 10) * 10;
+    });
     return {
       startPage,
     };
