@@ -5,7 +5,7 @@ let axiosInstance: Axios;
 export function GetAxios() {
   if (axiosInstance == null) {
     axiosInstance = axios.create({
-      baseURL: "http://mingky.me:5252/api/",
+      baseURL: "https://api.modoo.page/api/",
     });
   }
   return axiosInstance;
