@@ -1,7 +1,9 @@
 <template>
-  <!-- <nav>
-    <router-link to="/">Home</router-link>
-  </nav> -->
+  <nav>
+    <router-link to="/">일기 보기</router-link> |
+    <router-link to="/write">일기 쓰기</router-link> |
+    <router-link to="/login">로그인</router-link>
+  </nav>
   <router-view />
 </template>
 
