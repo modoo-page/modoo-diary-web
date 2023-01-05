@@ -28,15 +28,14 @@ export default defineComponent({
     const token = ref("");
     let axios = GetAxios();
     const requestToken = function () {
-      status.value = "token";
-      // axios
-      //   .post("/login/token", { email: email.value })
-      //   .then(() => {
-      //     status.value = "token";
-      //   })
-      //   .catch(() => {
-      //     alert("로그인 서버에 문제가 발생했습니다");
-      //   });
+      axios
+        .post("/login/token", { email: email.value })
+        .then(() => {
+          status.value = "token";
+        })
+        .catch(() => {
+          alert("로그인 서버에 문제가 발생했습니다");
+        });
     };
     const login = function () {
       axios
