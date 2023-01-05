@@ -1,8 +1,11 @@
 <template>
   <nav>
     <router-link to="/">일기 보기</router-link> |
-    <router-link to="/write">일기 쓰기</router-link> |
-    <router-link to="/login">로그인</router-link>
+    <div class="inline" v-show="isLogin">
+      <router-link to="/write">일기 쓰기</router-link> |
+    </div>
+    <router-link to="/login" v-show="!isLogin">로그인</router-link>
+    <router-link to="/logout" v-show="isLogin">로그아웃</router-link>
   </nav>
   <router-view />
 </template>
@@ -17,7 +20,9 @@
   text-align: center;
   color: #2c3e50;
 }
-
+.inline {
+  display: inline;
+}
 nav {
   padding: 30px;
 
@@ -31,3 +36,23 @@ nav {
   }
 }
 </style>
+
+<script lang="ts">
+import { defineComponent, toRefs } from "vue";
+import { useListStore } from "./stores/list";
+
+export default defineComponent({
+  setup() {
+    const list = useListStore();
+    const { isLogin } = toRefs(list);
+    function GetUserToken() {
+      let userToken = localStorage.getItem("userToken");
+      if (userToken != null) {
+        list.Login(userToken);
+      }
+    }
+    GetUserToken();
+    return { isLogin };
+  },
+});
+</script>
