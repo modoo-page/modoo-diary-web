@@ -22,7 +22,6 @@ export default defineComponent({
         alert("내용이 비어있습니다");
         return;
       }
-      console.log(diary);
       axios
         .post(
           "/diaries",
