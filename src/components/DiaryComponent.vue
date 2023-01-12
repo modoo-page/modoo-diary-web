@@ -22,7 +22,7 @@
       </tbody>
     </table>
     <div id="pagingDiv">
-      <router-link :to="'/?page=' + (startPage - 1 >= 0 ? startPage - 1 : 1)"
+      <router-link :to="'/?page=' + (startPage > 0 ? startPage : 1)"
         >&lt;</router-link
       >
       <router-link
@@ -100,9 +100,9 @@ export default defineComponent({
     },
   },
   setup(props) {
-    var startPage = ref(Math.floor(props.pageProp / 10) * 10);
+    var startPage = ref(Math.floor((props.pageProp - 1) / 10) * 10);
     watchEffect(() => {
-      startPage.value = Math.floor(props.pageProp / 10) * 10;
+      startPage.value = Math.floor((props.pageProp - 1) / 10) * 10;
     });
     return {
       startPage,
